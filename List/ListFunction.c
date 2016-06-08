@@ -1,5 +1,6 @@
 #include "List.h"
 #include <stdlib.h>
+#define MinElement -32767
 
 struct Node
 {
@@ -58,5 +59,60 @@ Position FindPrevious(ElementType X, List L)
 
 void Insert(ElementType X, Position P, List L)
 {
-    Position
+    Position TmpCell;
+    TmpCell = malloc(sizeof(struct Node));
+    if(TmpCell == NULL)
+    {
+        FatalError("Out of space.");
+    }
+    TmpCell->Element = X;
+    TmpCell->Next = P->Next;
+    P->Next = TmpCell;
+}
+
+void DeleteList(List L)
+{
+    Position P, TmpCell;
+    P = L->Next;
+    L->Next = NULL;
+    while(P != NULL)
+    {
+        TmpCell = P->Next;
+        free(P);
+        P = TmpCell;
+    }
+}
+
+Position Header(List L)
+{
+    return L;
+}
+
+Position First(List L)
+{
+    return L->Next;
+}
+
+Position Advance(Position P)
+{
+    if(P != NULL)
+    {
+        return P->Next;
+    }
+    else
+    {
+        return P;
+    }
+}
+
+ElementType Retrieve(Position P, List L)
+{
+    if(P != NULL)
+    {
+        return P->Element;
+    }
+    else
+    {
+        return MinElement;
+    }
 }
