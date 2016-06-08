@@ -19,5 +19,4 @@ Position First(List L);
 Position Advance(Position P);
 ElementType Retrieve(Positon P);
 
-
 #endif
