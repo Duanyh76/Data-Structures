@@ -58,5 +58,5 @@ Position FindPrevious(ElementType X, List L)
 
 void Insert(ElementType X, Position P, List L)
 {
-    Positi
+    Position
 }
