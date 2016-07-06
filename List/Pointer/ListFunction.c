@@ -8,6 +8,20 @@ struct Node
     Position Next;
 };
 
+struct DoubleLinksNode
+{
+    ElementType Element;
+    DLPosition Before;
+    DLPosition Next;
+};
+
+struct PolyNode
+{
+    int Coefficient;
+    int Exponent;
+    PtrToPolyNode Next;
+};
+
 int IsEmpty(List L)
 {
     return L->Next == NULL;
@@ -115,4 +129,220 @@ ElementType Retrieve(Position P, List L)
     {
         return MinElement;
     }
+}
+
+void PrintList(List L)
+{
+    Position P;
+    P = L->Next;
+    while(P != NULL)
+    {
+        printf("%d\t",P->Element);
+        P = P->Next;
+    }
+}
+
+void PrintLots(List L, List M)
+{
+    Position Pl, Pm;
+    int i;
+    Pm = M->Next;
+    while(Pm != NULL)
+    {   
+        Pl = L->Next;
+        for(i = Pm->Element; i >1; i--)
+        {
+            if(Pl != NULL)
+            {
+                Pl = Pl->Next;
+            }
+        }
+        if(Pl != NULL)
+        {
+            printf("%d\t",Pl->Element);
+        }
+        else
+        {
+            printf("%d\t",MinElement);
+        }
+        Pm = Pm->Next;
+    }
+}
+
+void Exchange(Position P, List L)
+{
+    Position PBefore, PNext;
+    if(IsLast(P, L))
+    {
+        return;
+    }
+    PBefore = FindPrevious(P->Element, L);
+    PNext = P->Next;
+    P->Next = PNext->Next;
+    PBefore->Next = PNext;
+    PNext->Next = P;
+}
+
+void DLExchange(DLPosition P, DLList L)
+{
+    if(P->Next == NULL)
+    {
+        return;
+    }
+    Position BeforeP, ExchangeP, NextP;
+    BeforeP = P->Before;
+    ExchangeP = P->Next;
+    BeforeP->Next = ExchangeP;
+    ExchangeP->Before = BeforeP;
+    P->Before = ExchangeP;
+    P->Next = ExchangeP->Next;
+    Exchange->Next = P;
+    if(P->Next != NULL)
+    {
+        NextP = P->Next;
+        NextP->Before = P;
+    }
+}
+
+void CopyThenCreateNode(Position ExitP, Position CCP)
+{
+     CCP->Element = ExitP->Element;
+     ExitP = ExitP->Next;
+     CCP->Next = malloc(sizeof(struct Node));
+     CCP = CCP->Next;
+}
+
+List Union(List L1, List L2)
+{
+    List UnionList;
+    Positon P1, P2, P;
+    P1 = L1->Next;
+    P2 = L2->Next;
+    P = malloc(sizeof(struct Node));
+    P = UnionList->Next;
+    while(P1 != NULL && P2 != NULL)
+    {
+        if(P1->Element == P2->Element)
+        {
+            P2 = P2->Next;
+            CopyThenCreateNode(P1, P);
+        }
+        else if(P1->Element > P2->Element)
+        {
+            CopyThenCreateNode(P2, P);
+        }
+        else
+        {
+            CopyThenCreateNode(P1, P);
+        }
+    }
+    if(P1 == NULL)
+    {
+        while(P2 != NULL)
+        {
+            CopyThenCreateNode(P2, P);
+        }
+    }
+    if(P2 == NULL)
+    {
+        while(P1 != NULL)
+        {
+            CopyThenCreateNode(P1, P);
+        }
+    }
+    P == NULL;
+    return UnionList;
+}
+
+List Intersection(List L1, List L2)
+{
+    List InterList;
+    Position P1, P2, P;
+    P1 = L1->Next;
+    P2 = L2->Next;
+    P = malloc(sizeof(struct Node));
+    P = InterList->Next;
+    While(P1 != NULL && P2 != NULL)
+    {
+        if(P1->Element == P2->Element)
+        {
+            P->Element = P1->Element;
+            P1 = P1->Next;
+            P2 = P2->Next;
+            P->Next = malloc(sizeof(struct Node));
+            P = P->Next;
+        }
+        else if(P1->Element > P2->Element)
+        {
+            P2 = P2->Next;
+        }
+        else
+        {
+            P1 = P1->Next;
+        }
+    }
+    P == NULL;
+    return InterList;
+}
+
+void CopyThenCreateTerm(Term ExitT, Term CCT)
+{
+    CCT->Coefficient = ExitT->Coefficient;
+    CCT->Exponent = Exit->Exponent;
+    ExitT = ExitT->Next;
+    CCT->Next = malloc(sizeof(struct PolyNode));
+    CCT = CCT->Next;
+}
+
+Polynomial AddPolynomial(const Polynomial Poly1, const Polynomial Poly2)
+{
+    Polynomial SumPoly;
+    Term T1, T2, T;
+    T1 = Poly1->Next;
+    T2 = Poly2->Next;
+    T = malloc(sizeof(struct PolyNode));
+    T = SumPoly->Next;
+    while(T1 != NULL && T2 != NULL)
+    {
+        if(T1->Coefficient == T2->Coefficient)
+        {
+            T->Coefficient = T1->Coefficient;
+            T->Exponent = T1->Exponent + T2->Exponent;
+            T1 = T1->Next;
+            T2 = T2->Next;
+            T->Next = malloc(sizeof(struct PolyNode));
+            T = T->Next;
+        }
+        else if(T1->Coefficient > T2->Coefficient)
+        {
+            CopyThenCreateTerm(T1, T);
+        }
+        else
+        {
+            CopyThenCreateTerm(T2, T);
+        }
+    }
+    if(T1 == NULL)
+    {
+        while(T2 != NULL)
+        {
+            CopyThenCreateTerm(T2, T);
+        }
+    }
+    if(T2 == NULL)
+    {
+        while(T1 != NULL)
+        {
+            CopyThenCreateTerm(T1, T);
+        }
+    }
+    T = NULL;
+    return SumPoly;
+}
+
+Polynomial MultPolynomial(const Polynomial Poly1, const Polynomial Poly2)
+{
+    Polynomial MultPoly;
+    Term T1, T2, T;
+    
 }
