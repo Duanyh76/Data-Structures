@@ -215,6 +215,7 @@ void CopyThenCreateNode(Position ExitP, Position CCP)
 List Union(List L1, List L2)
 {
     List UnionList;
+    UnionList = malloc(sizeof(struct Node));
     Positon P1, P2, P;
     P1 = L1->Next;
     P2 = L2->Next;
@@ -257,6 +258,7 @@ List Union(List L1, List L2)
 List Intersection(List L1, List L2)
 {
     List InterList;
+    InterList = malloc(sizeof(struct Node));
     Position P1, P2, P;
     P1 = L1->Next;
     P2 = L2->Next;
@@ -297,6 +299,7 @@ void CopyThenCreateTerm(Term ExitT, Term CCT)
 Polynomial AddPolynomial(const Polynomial Poly1, const Polynomial Poly2)
 {
     Polynomial SumPoly;
+    SumPloy = malloc(sizeof(struct PolyNode));
     Term T1, T2, T;
     T1 = Poly1->Next;
     T2 = Poly2->Next;
@@ -306,8 +309,8 @@ Polynomial AddPolynomial(const Polynomial Poly1, const Polynomial Poly2)
     {
         if(T1->Coefficient == T2->Coefficient)
         {
-            T->Coefficient = T1->Coefficient;
-            T->Exponent = T1->Exponent + T2->Exponent;
+            T->Exponent = T1->Exponent;
+            T->Coefficient = T1->Coefficient + T2->Coefficient;
             T1 = T1->Next;
             T2 = T2->Next;
             T->Next = malloc(sizeof(struct PolyNode));
@@ -343,6 +346,64 @@ Polynomial AddPolynomial(const Polynomial Poly1, const Polynomial Poly2)
 Polynomial MultPolynomial(const Polynomial Poly1, const Polynomial Poly2)
 {
     Polynomial MultPoly;
-    Term T1, T2, T;
-    
+    MultPoly = malloc(sizeof(struct PolyNode));
+    Term T1, T2, T, Tmp, TmpNext;
+    T1 = Poly1->Next;
+    T2 = Poly2->Next;
+    T = malloc(sizeof(struct PolyNode));
+    T = MultPoly->Next;
+    while(T1 != NULL)
+    {
+        while(T2 != NULL)
+        {
+            T->Coefficient = T1->Coefficient + T2->Coefficient;
+            T->Exponent = T1->Exponent +T2->Exponent;
+            T2 = T2->Next;
+            T->Next = malloc(sizeof(struct PolyNode));
+            T = T->Next;
+        }
+        T2 = Poly2->Next;
+        T1 = T1->Next;
+    }
+    T = MultPoly->Next;
+    Tmp = T;
+    TmpNext = Tmp->Next;
+    while(T->Next != NULL)
+    {
+        while(TmpNext != NULL)
+        {
+            if(Tmp->Exponent = TmpNext->Exponent)
+            {
+                Tmp->Coefficient = Tmp->Coefficient + TmpNext->Coefficient;
+                Tmp->Next = TmpNext->Next;
+                free(TmpNext);
+            }
+            else if(Tmp->Exponent > TmpNext->Exponent)
+            {
+                PolyExchange(Tmp, MultPloy);
+            }
+            else
+            {
+                break;
+            }
+            TmpNext = Tmp->Next;
+        }
+        T = T->Next;
+        TmpNext = T->Next;
+    }
+    return MultPoly;
+}
+
+void PolyExchange(Term T, Polynomial P)
+{
+    Term TBefore, TNext;
+    TBefore = P->Next;
+    TNext = T->Next;
+    while(TBefore->Next != NULL && TBefore->Next->Exponent != T->Exponent)
+    {
+        TBefore = TBefore->Next;
+    }
+    TBefore->Next = T->Next;
+    T->Next = TNext->Next;
+    TNext->Next = T;
 }

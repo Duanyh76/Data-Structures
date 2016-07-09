@@ -36,6 +36,7 @@ void CopyThenCreateNode(Position ExitP, Position CCP);
 List Union(List L1, List L2);
 List Intersection(List L1, List L2);
 void CopyThenCreateTerm(Term ExitT, Term CCT);
+void PolyExchange(Term T, Polynomial P);
 Polynomial AddPolynomial(const Polynomial Poly1, const Polynomial Poly2);
 Polynomial MultPolynomial(const Polynomial Poly1, const Polynomial Poly2);
 
