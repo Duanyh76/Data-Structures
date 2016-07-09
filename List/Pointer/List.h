@@ -20,10 +20,13 @@ List MakeEmpty(List L);
 int IsEmpty(List L);
 int IsLast(Positon P, List L);
 Position Find(ElementType X, List L);
+Position FindNext(ElementType X, Position P, List L);
 void Delete(ELementType X, List L);
 Position FindPrevious(ElementType X, List L);
 void Insert(ElementType X, Position P, List L);
 void DeleteList(List L);
+List Reverse(List L);
+List CreateThenReverse(List L);
 Position Header(List L);
 Position First(List L);
 Position Advance(Position P);
@@ -39,5 +42,9 @@ void CopyThenCreateTerm(Term ExitT, Term CCT);
 void PolyExchange(Term T, Polynomial P);
 Polynomial AddPolynomial(const Polynomial Poly1, const Polynomial Poly2);
 Polynomial MultPolynomial(const Polynomial Poly1, const Polynomial Poly2);
+Polynomial CreatePolynomial();
+Polynomial PowerPolynomial(int power, Polynomial Poly);
+List CreateJosephusList(const int people);
+ElementType WinJosephus(const int times, const int people);
 
 #endif

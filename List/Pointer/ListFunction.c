@@ -35,11 +35,24 @@ int IsLast(Position P, List L)
 Position Find(ElementType X, List L)
 {
     Position P;
+    P = L->Next;
     while(P != NULL && P->Element != X)
     {
         P = P->Next;
     }
     return P;
+}
+
+Position FindNext(ElementType X, Positon P,List L)
+{
+    if(P->Element == X || P == NULL)
+    {
+        return P;
+    }
+    else
+    {
+        return FindNext(X, P->Next, L);
+    }
 }
 
 List MakeEmpty(List L)
@@ -95,6 +108,54 @@ void DeleteList(List L)
         free(P);
         P = TmpCell;
     }
+}
+
+List Reverse(List L)
+{
+    Position PBefore ,P ,PNext;
+    PBefore = L->Next;
+    P = PBefore->Next;
+    PNext = P->Next;
+    PBefore->Next = NULL;
+    while(TNext != NULL)
+    {
+        T->Next = TBefore;
+        TBefore = T;
+        T = TNext;
+        TNext = T->Next;
+    }
+    T->Next = TBefore;
+    L->Next = T;
+    return L;
+}
+
+List CreateThenReverse(List L)
+{
+    int num = 0;
+    Position P, NewP;
+    List NewL;
+    NewL = malloc(sizeof(struct Node));
+    NewP = malloc(sizeof(struct Node));
+    NewP = NewL->Next;
+    P = L->Next;
+    while(P != NULL)
+    {
+        num++;
+        P = P->Next;
+    }
+    ElementType a[num];
+    for(int i = 0, P = L->Next; P != NULL; i++)
+    {
+        a[i] = P->Element;
+        P = P->Next;
+    }
+    for(int i = num - 1; i > -1; i--)
+    {
+        NewP->Element = a[i];
+        NewP->Next = malloc(sizeof(struct Node));
+        NewP = NewP->Next;
+    }
+    return NewL;
 }
 
 Position Header(List L)
@@ -406,4 +467,68 @@ void PolyExchange(Term T, Polynomial P)
     TBefore->Next = T->Next;
     T->Next = TNext->Next;
     TNext->Next = T;
+}
+
+Polynomial CreatePolynomial();
+{
+    Polynomial Poly;
+    Term T;
+    Poly = malloc(sizeof(struct PolyNode));
+    T = malloc(sizeof(struct PolyNode));
+    T = Poly->Next;
+    scanf("%d,%d",&coe,&exp);
+    while(exp != 0 && coe != 0)
+    {
+        T->Coefficient = coe;
+        T->Exponent = exp;
+        T->Next = malloc(sizeof(struct PolyNode));
+        T = T->Next;
+        scanf("%d,%d",&coe,&exp);
+    }
+    T = NULL;
+    return Poly;
+}
+
+Polynomial PowerPolynomial(int power, Polynomial Poly)
+{
+    Polynomial P;
+    P = MultPolynomial(Poly, Poly);
+    for(int i = 3; i < power + 1; i++)
+    {
+        P = MultPolynomial(P, Poly);
+    }
+    return P;
+}
+
+List CreateJosephusList(int people)
+{
+    List JosephusList;
+    JosephusList = malloc(sizeof(struct Node));
+    Positon P;
+    P = JosephusList;
+    for(int i = 0;i < people; i++)
+    {
+        P->Element = i + 1;
+        P->Next = malloc(sizeof(struct Node));
+        P = P->Next;
+    }
+    P->Next = JosephusList;
+    return JosephusList;
+}
+
+ElementType WinJosephus(int times, int people)
+{
+    List JosephusList = CreateJosephusList(people);
+    Position P;
+    P = JosephusList;
+    while(P != P->Next)
+    {
+        time = times % people;
+        for(int i = 0; i < time; i++)
+        {
+            P = P->Next;
+        }
+        Delete(P->Element, JosephusList);
+    }
+    return P->Element;
 }
