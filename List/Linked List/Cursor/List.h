@@ -5,6 +5,8 @@ typedef int PtrToNode;
 typedef PtrToNode List;
 typedef PtrToNode Position;
 
+static Position CursorAlloc(void);
+static void CursorFree(Position P);
 void InitializeCursorSpace(void);
 List MakeEmpty(List L);
 int IsEmpty(const List L);
