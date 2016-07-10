@@ -1,6 +1,7 @@
 #ifndef _LIST_H
 #define ElementType int
 
+struct Node;
 typedef int PtrToNode;
 typedef PtrToNode List;
 typedef PtrToNode Position;
