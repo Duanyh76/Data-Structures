@@ -8,6 +8,9 @@ typedef struct PolyNode *PtrToPolyNode;
 typedef PtrToPolyNode Term;
 typedef PtrToPolyNode Polynomial;
 
+struct ArrayLinkedList;
+typedef struct ArrayLinkedList *ALList;
+
 Position FindNext(ElementType X, Position P, List L);
 List Reverse(List L);
 List CreateThenReverse(List L);
@@ -26,3 +29,10 @@ Polynomial CreatePolynomial();
 Polynomial PowerPolynomial(int power, Polynomial Poly);
 List CreateJosephusList(const int people);
 ElementType WinJosephus(const int times, const int people);
+ElementType FindAndAdjust(ElementType X, ALList L);
+void AddAndAdjust(ElementType X, ALList L);
+ElementType FindAndAdjust(ElementType X, List L);
+void AddAndAdjust(ElementType X, List L);
+void RemoveMultipleElements(ALList L);
+void Delete(int Position, ALList L);
+void 

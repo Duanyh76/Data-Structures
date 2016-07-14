@@ -412,3 +412,106 @@ ElementType WinJosephus(int times, int people)
     }
     return P->Element;
 }
+
+struct ArrayLinkedList
+{
+    int Capacity;
+    int Position;
+    int Size;
+    ElementType *Array;
+};
+
+ElementType FindAndAdjust(ElementType X, ALList L)
+{
+    ElementType Key;
+    L->Position = 0;
+    while(L->Position != L->Size - 1 && L->Array[Position] != X)
+    {
+        Position++;
+    }
+    if(L->Array[Position] == X)
+    {
+        Key = L->Array[Position];
+        while(Position != 0)
+        {
+            L->Array[Position] = L->Array[Position - 1];
+            Position--;
+        }
+        L->Array[Position] == Key;
+    }
+    else
+    {
+        return 0;
+    }
+    return L->Array[Position];
+}
+
+void AddAndAdjust(ElementType X, ALList L)
+{
+    if(L->Size == L->Capacity)
+    {
+        Error("Full list");
+        return;
+    }   
+    L->Position = L->Size;
+    L->Size++;
+    while(Position != 0)
+    {
+        L->Array[Position] = L->Array[Position - 1];
+        Position--;
+    }
+    L->Array[Position] = X;
+}
+
+ElementType FindAndAdjust(ElementType X, List L)
+{
+    Position P, Key;
+    P = FindPrevious(X, L);
+    if(P->Next == NULL)
+    {
+        return 0;
+    }
+    Key = P->Next;
+    P->Next = Key->Next;
+    Key->Next = L->Next;
+    L->Next = Key;
+    return Key->Element; 
+}
+
+void AddAndAdjust(ElementType X, List L)
+{
+    Position P;
+    P = malloc(sizeof(struct Node));
+    if(P == NULL)
+    {
+        FatalError("Out of space");
+    }
+    P->Element = X;
+    P->Next = L->Next;
+    L->Next = P;
+}
+
+void RemoveMultipleElements(ALList L)
+{
+    for(int i; i < L->Size - 1; i++)
+    {
+        for(int j = i; j < L->Size -1 ;j++)
+        {
+            if(L->Array[i] == L->Array[j])
+            {
+                Delete(j, L);
+            }
+        }
+    }
+}
+
+void Delete(int Position, ALList L)
+{
+    while(j < L->Size - 1)
+    {
+        L->Array[j] = L->Array[j + 1];
+        j++;
+    }
+    L->Size--;
+}
+
