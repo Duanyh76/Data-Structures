@@ -11,6 +11,13 @@ typedef PtrToPolyNode Polynomial;
 struct ArrayLinkedList;
 typedef struct ArrayLinkedList *ALList;
 
+struct LazyNode;
+typedef struct LazyNode *LazyArray;
+typedef struct LazyNode *LazyPosition;
+
+struct SymNode;
+typedef struct SymNode *SymStack;
+
 Position FindNext(ElementType X, Position P, List L);
 List Reverse(List L);
 List CreateThenReverse(List L);
@@ -35,4 +42,7 @@ ElementType FindAndAdjust(ElementType X, List L);
 void AddAndAdjust(ElementType X, List L);
 void RemoveMultipleElements(ALList L);
 void Delete(int Position, ALList L);
-void 
+void LazyDelete(ElementType X, List L);
+struct Expression;
+void CheckPair(char Input, SymStack S);
+ElementType Calucate(Expression Array[]);
