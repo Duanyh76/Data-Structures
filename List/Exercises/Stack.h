@@ -1,7 +1,13 @@
 struct SymNode;
 typedef struct SymNode *SymStack;
-
 struct Expression;
 void CheckPair(char Input, SymStack S);
 ElementType Calucate(Expression Array[]);
-Expression InfixToPostfix
+Expression InfixToPostfix(Expression InfixArray[]);
+Expression InfixToPostfixWithIndex(Expression InfixArray[]);
+Expression PostfixToInfix(Expression PostfixArray[]);
+struct TwoStacksShareArray;
+typedef struct TwoStacksShareArray *TwoStacks;
+TwoStacks CreateTwoStack(int Size);
+void PopB(TwoStack TS);
+void PushB(TwoStack TS);
