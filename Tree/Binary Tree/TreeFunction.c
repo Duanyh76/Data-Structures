@@ -109,9 +109,9 @@ SearchTree Delete( ElementType X, SearchTree T )
     }
     else if( T->Left && T->Right )
     {
-        TmpCell = FindMin( T->Left );
+        TmpCell = FindMin( T->Right );                     //Tmp = FindMax( T->Left );
         T->Element = TmpCell->Element;
-        T->Right = Delete( TmpCell->Element, T->Right );
+        T->Right = Delete( TmpCell->Element, T->Right );   //T->Left = Delete( TmpCell->Element, T->Left);
     }
     else
     {
@@ -124,6 +124,12 @@ SearchTree Delete( ElementType X, SearchTree T )
         {
             T = T->Left;
         }
+        free(TmpCell);
     }
     return T;
+}
+
+ElementType Retrive( Positon P )
+{
+    return P->Element;
 }
