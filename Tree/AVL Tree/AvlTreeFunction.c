@@ -31,10 +31,7 @@ AvlTree Insert( ElementType X, AvlTree T )
         }
         else
         {
-            T->Element = X;
-            T->Height = 0;
-            T->Right = NULL;
-            T->Left = NULL;
+            T = CreateAvlNode( X, T );
         }
     }
     else if( T->Element < X )
@@ -63,6 +60,84 @@ AvlTree Insert( ElementType X, AvlTree T )
     }
     T->Height = Max( Height( T->Left ), Height( T->Right ) ) + 1;
     return T;
+}
+
+Position Insert( ElementType X, AvlTree T )
+{
+    Position P, Parent, GrandParent;
+    Stack S, LeftOrRight;
+    int Key;
+    S = CreateStack( void );
+    LeftOrRight = CreateStack( void );
+    P = T;
+    while( P != NULL );
+    {   
+        Push( P, S);
+        if( P->Element > X )
+        {
+            P = P->Left;
+            Key = 0;
+        }
+        else if( P->Element < X )
+        {
+            P = P->Right;
+            Key = 1;
+        }
+        else if( P->Element = X )
+        {
+            return P;
+        }
+        Push( Key, LeftOrRight);
+    }
+    P = malloc( sizeof( struct AvlNode ) );
+    if( P == NULL)
+    {
+        FatalError("Out of space");
+    }
+    else
+    {
+        P = CreateAvlNode( X, P );
+    }
+    Parent = TopAndPop( S );
+    Parent->Height = Max( Height( Parent->Left ), Height( Parent->Right ) ) + 1;
+    GrandParent = TopAndPop( S );
+    if( abs( GrandParent->Left->Height - GrandParent->Right->Height == 2) )
+    {   
+        if( Top( LeftOrRight ) == 0 )
+        {
+            Pop( LeftOrRight );
+            if( Top( LeftOrRight ) == 0 )
+            {
+                GrandParent = SingleRotateWithLeft( GrandParent );
+            }
+            else if( Top( LeftOrRight ) == 1 )
+            {
+                GrandParent = DoubleRotateWithLeft( GrandParent );
+            }
+        }
+        else if( Top( LeftOrRight ) == 1 )
+        {
+            Pop( LeftOrRight );
+            if( Top( LeftOrRight ) == 0 )
+            {
+                GrandParent = DoubleRotateWithRight( GrandParent );
+            }
+            else if( Top( LeftOrRight ) == 1 )
+            {
+                GrandParent = SingleRotateWithRight( GrandParent );
+            }
+        }
+    }    
+    return P;
+}
+
+Positon CreateAvlNode( ElementType X, Position P )
+{
+    P->Element = X;
+    P->Height = 0;
+    P->Right = NULL;
+    P->Left = NULL;
+    return P;
 }
 
 Position SingleRotateWithLeft( Position K2 )
@@ -97,4 +172,34 @@ Position DoubleRotateWithRight( Position K )
 {
     K->Right = SingleRotateWithLeft( K->Right );
     return SingleRotateWithRight( K );
+}
+
+Position DoubleRotateWithLeft ( Postion P );
+{
+    Position Child, GrandChild;
+    Child = P->Left;
+    GrandChild = Child->Right;
+    P->Left = GrandChild->Right;
+    Child->Right = GrandChild->Left;
+    GrandChild->Left = Child;
+    GrandChild->Right = P;
+    Child->Height = Max( Height( Child->Left ), Height( Child->Right ) ) + 1;
+    P->Height = Max( Height( P->Left ), Height( P->Right ) ) + 1;
+    GrandChild->Height = Max( Height( Child ), Height( P ) ) + 1;
+    return GrandChild;
+}
+
+Position DoubleRotateWithRight ( Postion P );
+{
+    Position Child, GrandChild;
+    Child = P->Right;
+    GrandChild = Child->Left;
+    P->Right = GrandChild->Left;
+    Child->Left = GrandChild->Right;
+    GrandChild->Right = Child;
+    GrandChild->Left = P;
+    Child->Height = Max( Height( Child->Left ), Height( Child->Right ) ) + 1;
+    P->Height = Max( Height( P->Left ), Height( P->Right ) ) + 1;
+    GrandChild->Height = Max( Height( Child ), Height( P ) ) + 1;
+    return GrandChild;
 }
