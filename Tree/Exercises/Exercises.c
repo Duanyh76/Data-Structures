@@ -149,5 +149,37 @@ void PrintKeyLevelOrderTraversal( SearchTree T )
     }
 }
 
+struct TreeNode
+{
+    ElementType Element;
+    Position Child;
+    Position Sibling;
+};
 
+typedef struct TreeNode *Tree;
+typedef struct TreeNode *Position;
 
+void PrintTree( Tree T )
+{
+    if( T )
+    {
+        Print( T->Element );
+        if( T->Sibling )
+        {
+            PrintTree( T->Sibling );
+        }
+        if( T->Next )
+        {
+            PrintTree( T->Next );
+        }
+    }
+}
+
+int Similar( BinaryTree T1, BinaryTree T2 )
+{
+    if( T1 == NULL | T2 == NULL )
+    {
+        return T1 == NULL && T2 == NULL;
+    }
+    return Similar( T1->Left, T2->Left ) && Similar( T1->Right, T2->Right );
+}
