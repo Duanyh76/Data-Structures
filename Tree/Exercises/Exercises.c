@@ -130,3 +130,24 @@ void PrintKey( SearchTree T, ElementType k1, ElementType k2 )
     }
 }
 
+void PrintKeyLevelOrderTraversal( SearchTree T )
+{
+    Queue Q;
+    Enqueue ( T );
+    Position P;
+    while( Q != NULL )
+    {
+        P = Dequeue( Q )
+        if( P->Left )
+        {
+            Enqueue( P->Left );
+        }
+        if( P->Right )
+        {
+            Enqueue( P->Right );
+        }
+    }
+}
+
+
+
