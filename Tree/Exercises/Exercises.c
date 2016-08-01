@@ -183,3 +183,74 @@ int Similar( BinaryTree T1, BinaryTree T2 )
     }
     return Similar( T1->Left, T2->Left ) && Similar( T1->Right, T2->Right );
 }
+
+void ExchangeChildren( SearchTree T )
+{
+    Postion P;
+    P = T->Left;
+    T->Left = T->Right;
+    T->Right = P;
+    free( P );
+}
+
+int CheckEqual( Position P1, Positon P2 )
+{
+    return P1->Element == P2->Element;
+}
+
+int CheckChildren( Position P1, Postion P2 )
+{
+    
+    if( CheckEqual( P1->Left, P2->Left ) )
+        if( CheckEqual( P1->Right, P2->Right ) )
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    else
+    {
+        if( CheckEqual( P1->Left, P2->Right ) )
+        {
+            if( CheckEqual( P1->Right, P2->Left ) )
+            {
+                ExchangeChildren( P1 );
+                return 1;
+            }
+        }
+        return 0;
+    }
+}
+
+int CheckPositionIsomorphic( Position P1, Position P2 )
+{
+    if( CheckEqual( P1, P2 ) )
+    {
+        if( CheckChildren( P1, P2 ) )
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int Isomorphic( SearchTree T1, SearchTree T2 )
+{
+    if( T1 != NULL && T2->NULL )
+    {
+        if( CheckPositionIsomorphic( T1, T2 ) )
+        {
+            if( Isomorphic( T1->Left, T2->Left ) )
+            {
+                if( Isomeophic( T1->Right, T2->Right ) )
+                {
+                    return 1;
+                }
+            }
+        }
+    }
+    return 0;
+}
