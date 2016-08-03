@@ -46,6 +46,12 @@ HashTable InitializeTable( int TableSize )
     return H;
 }
 
+void DestoryTable( HashTable H )
+{
+    free( H->TheCells);
+    free( H );
+}
+
 Position Find( ElementType Key, HashTable H )
 {
     Position CurrentPos;
@@ -74,4 +80,22 @@ void Insert( ElementType Key, HashTable H )
         H->TheCells[ Pos ].Info = Legitimate;
         H->TheCells[ Pos ].Element = Key;
     }
+}
+
+HashTable Rehash( HashTable H )
+{
+    int i, OldSize;
+    Cell *OldCells;
+    OldCells = H->TheCells;
+    OldSize = H->TableSize;
+    H = InitializeTable( 2 * OldSize );
+    for( i = 0; i < OldSize; i++ )
+    {
+        if( OldCells[ i ].Info == Legitimate )
+        {
+            Insert( OldCells[ i ].Element, H );
+        }
+    }
+    free( OldCells );
+    return H;
 }
