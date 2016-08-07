@@ -155,3 +155,58 @@ Delete( Position P, PriorityQueue H )
     Num = DeleteMin( H );
     return Tmp;
 }
+
+PriorityQueue BuildHeapByInsert( ElementType Array[], int Length )
+{
+    int i;
+    PriorityQueue H;
+    H = Initialize( Length );
+    for( i = 0; i < Length; i++ )
+    {
+        Insert( Array[ i ], H );
+        H->Size++; 
+    }
+    return H;
+}
+
+PriorityQueue BuildHeap( ElementType Array[], int Length )
+{
+    PriorityQueue H;
+    H = Initialize( Length );
+    int i;
+    for( i = 0; i < Length; i++ )
+    {
+        H->Elements[ i + 1 ] = Array[ i ];
+        H->Size++;
+    }
+    for( i = H->Size / 2; i > 0; i--)
+    {
+        if( H->Elements[ i ] > H->Elements[ i * 2 ] || H->Elements[ i ] > H->Elements[ i * 2 + 1 ] )
+        {
+            PercolateDown( i, H );
+        }
+    }
+    return H;
+}
+
+void PercolateDown( Position P, PriorityQueue H )
+{
+    ElementType Key;
+    Key = H->Elements[ P ];
+    Position Child;
+    Child = P * 2;
+    if( H->Elements[ Child ] > H->Elements[ Child + 1 ] )
+    {
+        Child++;
+    }
+    while( Child < H->Size + 1 && H->Elements[ P ] > H->Elements[ Child ] )
+    {
+        H->Elements[ P ] = H->Elements[ Child ];
+        P = Child;
+        Child = P * 2;
+        if( H->Elements[ Child ] > H->Elements[ Child + 1 ] )
+        {
+            Child++;
+        } 
+    }
+}

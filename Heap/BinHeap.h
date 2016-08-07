@@ -15,5 +15,8 @@ int IsFull( PriorityQueue H );
 void DecreaseKey( Position P, ElementType X, PriorityQueue H );
 void IncreaseKey( Position P, Elementtype X, PriorityQueue H );
 void Delete( Position P, PriorityQueue H );
+PriorityQueue BuildHeapByInsert( ElementType Array[], int Length );
+PriorityQueue BuildHeap( ElementType Array[], int Length );
+void PercolateDown( Position P, PriorityQueue H );
 
 #endif
