@@ -1,7 +1,7 @@
 /* Min-Max Heap*/
 void DeleteMin( PriorityQueue H )
 {
-
+    
 }
 
 void DeleteMax( PriorityQueue H )
